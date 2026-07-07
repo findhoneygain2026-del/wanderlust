@@ -1,48 +1,57 @@
 <% layout('/layouts/boilerplate') %>
 <body>
-    <div id="filters" class="flex gap-6">
-        <a href="/listings?category=all" class="filter text-center m-2 hover:cursor-pointer opacity-60 hover:opacity-100">
-            <i class="fa-solid fa-list-ul"></i>
-            <p class="text-sm">All</p>
-        </a>
-        <a href="/listings?category=trending" class="filter text-center m-2 hover:cursor-pointer opacity-60 hover:opacity-100">
-           <div><i class="fa-solid fa-fire "></i></div>
-            <p class="text-sm">Trending</p>
-        </a>
-        <a href="/listings?category=rooms" class="filter text-center m-2 hover:cursor-pointer opacity-60 hover:opacity-100">
-           <div><i class="fa-solid fa-bed"></i></div>
-            <p class="text-sm">Rooms</p>
-        </a>
-        <a href="/listings?category=iconic-cities" class="filter text-center m-2 hover:cursor-pointer opacity-60 hover:opacity-100">
-           <div><i class="fa-solid fa-mountain-city"></i></div>
-            <p class="text-sm">Iconic Cities</p>
-        </a>
-        <a href="/listings?category=mountains" class="filter text-center m-2 hover:cursor-pointer opacity-60 hover:opacity-100">
-           <div><i class="fa-solid fa-mountain"></i></div>
-            <p class="text-sm">Mountains</p>
-        </a>
-        <a href="/listings?category=castles" class="filter text-center m-2 hover:cursor-pointer opacity-60 hover:opacity-100">
-           <div><i class="fa-brands fa-fort-awesome"></i></div>
-            <p class="text-sm">Castles</p>
-        </a>
-        <a href="/listings?category=amazing-pools" class="filter text-center m-2 hover:cursor-pointer opacity-60 hover:opacity-100">
-           <div><i class="fa-solid fa-person-swimming"></i></div>
-            <p class="text-sm">Amazing Pools</p>
-        </a>
+   <div id="filters" class="flex flex-row overflow-x-auto gap-6 px-4 py-3 scrollbar-hide no-scrollbar">
+    
+    <a href="/listings?category=all" class="filter text-center min-w-[60px] shrink-0 hover:cursor-pointer opacity-60 hover:opacity-100">
+        <i class="fa-solid fa-list-ul"></i>
+        <p class="text-sm">All</p>
+    </a>
+    
+    <a href="/listings?category=trending" class="filter text-center min-w-[60px] shrink-0 hover:cursor-pointer opacity-60 hover:opacity-100">
+        <i class="fa-solid fa-fire"></i>
+        <p class="text-sm">Trending</p>
+    </a>
 
-        <a href="/listings?category=camping" class="filter text-center m-2 hover:cursor-pointer opacity-60 hover:opacity-100">
-           <div><i class="fa-solid fa-campground"></i></div>
-            <p class="text-sm">Camping</p>
-        </a>
-        <a href="/listings?category=farms" class="filter text-center m-2 hover:cursor-pointer opacity-60 hover:opacity-100">
-           <div><i class="fa-solid fa-cow"></i></div>
-            <p class="text-sm">Farms</p>
-        </a>
-        <a href="/listings?category=arctic" class="filter text-center m-2 hover:cursor-pointer opacity-60 hover:opacity-100">
-           <div><i class="fa-solid fa-snowflake"></i></div>
-            <p class="text-sm" >Arctic</p>
-        </a>
-    </div>
+    <a href="/listings?category=rooms" class="filter text-center min-w-[60px] shrink-0 hover:cursor-pointer opacity-60 hover:opacity-100">
+        <i class="fa-solid fa-bed"></i>
+        <p class="text-sm">Rooms</p>
+    </a>
+
+    <a href="/listings?category=iconic-cities" class="filter text-center min-w-[60px] shrink-0 hover:cursor-pointer opacity-60 hover:opacity-100">
+        <i class="fa-solid fa-mountain-city"></i>
+        <p class="text-sm">Cities</p>
+    </a>
+
+    <a href="/listings?category=mountains" class="filter text-center min-w-[60px] shrink-0 hover:cursor-pointer opacity-60 hover:opacity-100">
+        <i class="fa-solid fa-mountain"></i>
+        <p class="text-sm">Mountains</p>
+    </a>
+
+    <a href="/listings?category=castles" class="filter text-center min-w-[60px] shrink-0 hover:cursor-pointer opacity-60 hover:opacity-100">
+        <i class="fa-brands fa-fort-awesome"></i>
+        <p class="text-sm">Castles</p>
+    </a>
+
+    <a href="/listings?category=amazing-pools" class="filter text-center min-w-[60px] shrink-0 hover:cursor-pointer opacity-60 hover:opacity-100">
+        <i class="fa-solid fa-person-swimming"></i>
+        <p class="text-sm">Pools</p>
+    </a>
+
+    <a href="/listings?category=camping" class="filter text-center min-w-[60px] shrink-0 hover:cursor-pointer opacity-60 hover:opacity-100">
+        <i class="fa-solid fa-campground"></i>
+        <p class="text-sm">Camping</p>
+    </a>
+
+    <a href="/listings?category=farms" class="filter text-center min-w-[60px] shrink-0 hover:cursor-pointer opacity-60 hover:opacity-100">
+        <i class="fa-solid fa-cow"></i>
+        <p class="text-sm">Farms</p>
+    </a>
+
+    <a href="/listings/arctic" class="filter text-center min-w-[60px] shrink-0 hover:cursor-pointer opacity-60 hover:opacity-100">
+        <i class="fa-solid fa-snowflake"></i>
+        <p class="text-sm">Arctic</p>
+    </a>
+</div>
 
     <div class="grid grid-cols-2 max-[520px]:grid-cols-1 md:grid-cols-3 gap-8">
     <% for(let listing of allListings){ %>

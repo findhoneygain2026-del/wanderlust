@@ -29,3 +29,10 @@ body{
 .was-validated .form-input:valid ~ .valid-feedback {
   display: block;
 }
+.no-scrollbar::-webkit-scrollbar {
+  display: none;
+}
+.no-scrollbar {
+  -ms-overflow-style: none; 
+  scrollbar-width: none;  
+}
