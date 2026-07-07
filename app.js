@@ -89,6 +89,7 @@ app.all("/*splat",(req,res,next)=>{
 
 app.use((err,req,res,next)=>{
     let {status = 500,message = "Something went wrong"} = err;
+    console.error(err);
     res.status(status).render('listings/error',{message});
 })
 
