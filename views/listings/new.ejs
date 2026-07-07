@@ -1,0 +1,92 @@
+<% layout('/layouts/boilerplate') %>
+
+<div class="flex justify-center items-center min-h-[calc(100vh-100px)] px-4 py-6">
+    <div class="w-full max-w-xl bg-white p-6 rounded-lg shadow-sm border border-gray-100">
+        <h3 class="text-3xl font-bold mb-6 text-gray-800">Create a New Listing</h3>
+        
+        <form method="POST" action="/listings" class="space-y-4 needs-validation" novalidate enctype="multipart/form-data"> 
+            
+            <div class="mb-5 max-w-md">
+  <label for="category" class="block mb-2 text-sm font-medium text-gray-700 tracking-wide">
+    Category
+  </label>
+  <div class="relative">
+    <select 
+      name="listing[category]" 
+      id="category" 
+      class="block w-full px-4 py-3 text-gray-900 bg-white border border-gray-300 rounded-lg shadow-sm appearance-none focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:border-indigo-500 transition duration-150 ease-in-out sm:text-sm"
+      required
+    >
+      <option value="" disabled selected class="text-gray-400">Select a category</option>
+      <option value="rooms">Rooms</option>
+      <option value="iconic-cities">Iconic Cities</option>
+      <option value="mountains">Mountains</option>
+      <option value="castles">Castles</option>
+      <option value="amazing-pools">Amazing Pools</option>
+      <option value="camping">Camping</option>
+      <option value="farms">Farms</option>
+      <option value="arctic">Arctic</option>
+    </select>
+    
+    <!-- Custom Dropdown Arrow Icon -->
+    <div class="pointer-events-none absolute inset-y-0 right-0 flex items-center px-3 text-gray-500">
+      <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
+        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7"></path>
+      </svg>
+    </div>
+  </div>
+</div>
+
+            <div class="form-group">
+                <label class="block text-md font-medium text-gray-700 mb-1">Title</label>
+                <input type="text" name="listing[title]" placeholder="Enter title" required
+                       class="form-input w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:border-rose-500 focus:ring-2 focus:ring-rose-200 transition">
+                <div class="invalid-feedback hidden text-sm text-red-500 mt-1">Please enter a valid title.</div>
+                <div class="valid-feedback hidden text-sm text-green-600 mt-1">Looks good!</div>
+            </div>
+            
+            <div class="form-group">
+                <label class="block text-md font-medium text-gray-700 mb-1">Description</label>
+                <textarea name="listing[description]" placeholder="Enter description" rows="4" required
+                          class="form-input w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:border-rose-500 focus:ring-2 focus:ring-rose-200 transition"></textarea>
+                <div class="invalid-feedback hidden text-sm text-red-500 mt-1">Please add a short description.</div>
+            </div>
+
+            <div class="form-group">
+                <label class="block text-md font-medium text-gray-700 mb-1">Upload Listing Image</label>
+                <input type="file" name="listing[image]" required
+                       class="form-input w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:border-rose-500 focus:ring-2 focus:ring-rose-200 transition">
+                <div class="invalid-feedback hidden text-sm text-red-500 mt-1">Please enter an image file.</div>
+            </div>
+            
+            <div class="grid grid-cols-1 md:grid-cols-3 gap-4">
+                <div class="form-group">
+                    <label class="block text-md font-medium text-gray-700 mb-1">Price</label>
+                    <input type="number" name="listing[price]" placeholder="Enter price" required min="0"
+                           class="form-input w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:border-rose-500 focus:ring-2 focus:ring-rose-200 transition">
+                    <div class="invalid-feedback hidden text-sm text-red-500 mt-1">Enter a valid price.</div>
+                </div>
+                
+                <div class="form-group">
+                    <label class="block text-md font-medium text-gray-700 mb-1">Country</label>
+                    <input type="text" name="listing[country]" placeholder="Enter country" required
+                           class="form-input w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:border-rose-500 focus:ring-2 focus:ring-rose-200 transition">
+                    <div class="invalid-feedback hidden text-sm text-red-500 mt-1">Country required.</div>
+                </div>
+                
+                <div class="form-group">
+                    <label class="block text-md font-medium text-gray-700 mb-1">Location</label>
+                    <input type="text" name="listing[location]" placeholder="Enter location" required
+                           class="form-input w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:border-rose-500 focus:ring-2 focus:ring-rose-200 transition">
+                    <div class="invalid-feedback hidden text-sm text-red-500 mt-1">Location required.</div>
+                </div>
+            </div>
+            
+            <div class="pt-2">
+                <button type="submit" class="w-full md:w-auto px-6 py-2.5 bg-rose-500 text-white font-semibold rounded-md shadow hover:bg-rose-600 active:bg-rose-700 transition duration-200">
+                    Add Listing
+                </button>
+            </div>
+        </form>
+    </div>
+</div>

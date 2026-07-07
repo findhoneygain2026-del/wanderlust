@@ -1,0 +1,17 @@
+<% layout("/layouts/boilerplate") %>
+
+<div class="w-full flex justify-center pt-8 md:pt-12">
+    
+    <div class="flex items-start sm:items-center w-full max-w-2xl p-4 text-sm text-red-800 border border-red-200 rounded-lg bg-red-50 shadow-sm" role="alert">
+        
+        <svg class="w-5 h-5 me-3 shrink-0 text-red-600 mt-0.5 sm:mt-0" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="currentColor" viewBox="0 0 20 20">
+            <path d="M10 .5a9.5 9.5 0 1 0 9.5 9.5A9.51 9.51 0 0 0 10 .5ZM9.5 4a1.5 1.5 0 1 1 0 3 1.5 1.5 0 0 1 0-3ZM12 15H8a1 1 0 0 1 0-2h1v-3H8a1 1 0 0 1 0-2h2a1 1 0 0 1 1 1v4h1a1 1 0 0 1 0 2Z"/>
+        </svg>
+        
+        <div>
+            <span class="font-bold text-red-900 block sm:inline mb-1 sm:mb-0 me-1">Error Occurred!</span> 
+            <span class="text-red-700 font-medium"><%= message %></span>
+        </div>
+        
+    </div>
+</div>

@@ -1,0 +1,160 @@
+<% layout('/layouts/boilerplate') %>
+
+    <script src="https://unpkg.com/maplibre-gl@latest/dist/maplibre-gl.js"></script>
+  <link href="https://unpkg.com/maplibre-gl@latest/dist/maplibre-gl.css" rel="stylesheet" />
+
+    <div class="mx-auto max-w-3xl px-4 py-8 pt-0">
+
+        <h3 class="text-3xl font-semibold tracking-tight text-gray-900 mb-4">
+            <%= listing.title %>
+        </h3>
+
+        <div class="relative w-full h-80 sm:h-96 rounded-2xl overflow-hidden shadow-sm mb-4 bg-gray-900">
+            <img src="<%= listing.image.url %>"
+                class="absolute inset-0 w-full h-full object-cover blur-xl opacity-40 scale-110 pointer-events-none"
+                alt="">
+
+            <img src="<%= listing.image.url %>" class="relative w-full h-full object-contain" alt="listing_image">
+        </div>
+
+        <div class="space-y-1 mb-8 text-[15px] text-gray-800 tracking-wide font-normal leading-relaxed">
+            <p class="text-gray-700">Owned by <i>
+                    <%= listing.owner.username %>
+                </i></p>
+            <p class="text-gray-700">
+                <%= listing.description %>
+            </p>
+
+            <p class="text-gray-900 font-medium"> ₹<%= listing.price ? listing.price.toLocaleString("en-IN") : "0" %> /
+                    night</p>
+
+            <p class="text-gray-600">
+                <%= listing.location %>
+            </p>
+
+            <p class="text-gray-500">
+                <%= listing.country %>
+            </p>
+        </div>
+
+        <% if(currentUser && currentUser._id.equals(listing.owner._id)){ %>
+            <div class="flex items-center gap-3 mb-10">
+                <a href="/listings/<%= listing._id%>/edit"
+                    class="inline-flex items-center justify-center px-6 py-2 bg-[#fe424f] text-white font-medium rounded-md shadow-sm hover:bg-rose-600 transition-colors duration-200 text-sm min-w-[84px]">
+                    Edit
+                </a>
+
+                <form method="POST" action="/listings/<%= listing._id%>?_method=DELETE" class="inline">
+                    <button type="submit"
+                        class="inline-flex items-center justify-center px-5 py-2 bg-[#111827] text-white font-medium rounded-md shadow-sm hover:bg-gray-800 transition-colors duration-200 text-sm min-w-[84px]">
+                        Delete
+                    </button>
+                </form>
+            </div>
+            <% } %>
+
+                <hr>
+
+                <div class="mx-auto max-w-3xl px-4 py-8 pt-0 mt-10">
+                    <% if(currentUser){ %>
+                        <h3 class="text-2xl font-bold mb-4 text-gray-800">Leave a Review</h3>
+                        <form action="/listings/<%= listing.id %>/reviews" class="needs-validation" novalidate
+                            method="POST">
+                        <div class="mb-4">
+                            <label class="block text-md font-medium text-gray-700 mb-1" for="rating">Rating</label>
+                            <fieldset class="starability-basic">
+                            <input type="radio" id="no-rate" class="input-no-rate" name="review[rating]" value="1" checked                                aria-label="No rating." />
+                            <input type="radio" id="first-rate1" name="review[rating]" value="1" />
+                            <label for="first-rate1" title="Terrible">1 star</label>
+                            <input type="radio" id="first-rate2" name="review[rating]" value="2" />
+                            <label for="first-rate2" title="Not good">2 stars</label>
+                            <input type="radio" id="first-rate3" name="review[rating]" value="3" />
+                            <label for="first-rate3" title="Average">3 stars</label>
+                            <input type="radio" id="first-rate4" name="review[rating]" value="4" />
+                            <label for="first-rate4" title="Very good">4 stars</label>
+                            <input type="radio" id="first-rate5" name="review[rating]" value="5" />
+                            <label for="first-rate5" title="Amazing">5 stars</label>
+                        </fieldset>
+                        </div>
+                        <div class="mb-4">
+                            <label class="block text-md font-medium text-gray-700 mb-1"
+                                for="comment">Comment</label>
+                            <textarea required
+                                class="form-input w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:border-rose-500 focus:ring-2 focus:ring-rose-200 transition"
+                                name="review[comment]" id="comment" cols="30" rows="5"></textarea>
+                            <div class="invalid-feedback hidden text-sm text-red-500 mt-1">Please add comment for
+                            submit.</div>
+                        </div>
+                        <button
+                            class="w-full md:w-auto px-6 py-2.5 bg-rose-500 text-white font-semibold rounded-md shadow hover:bg-rose-600 active:bg-rose-700 transition duration-200">Submit</button>
+                        </form>
+                        <hr class="mt-4">
+                        <% } %>
+                        <% for(review of listing.reviews) { %>
+                        <p class="mt-6"><b>All Reviews</b></p>
+                        <div class="grid grid-cols-1 md:grid-cols-2 gap-4 wrap">
+                            <div class="card h-full">
+                                <div
+                                class="break-words bg-neutral-primary-soft h-auto block w-full p-4 mt-4 border border-default rounded-md shadow-xs hover:bg-neutral-secondary-medium">
+                                <h5
+                                class="mb-3 text-2xl font-semibold tracking-tight text-heading leading-8">
+                                @<%= review.author.username %>
+                                </h5>
+                                <p class="starability-result" data-rating="<%= review.rating %>"></p>
+                                <p class="text-body mb-2">
+                                <%= review.comment %>
+                                </p>
+                                <% if(currentUser && currentUser._id.equals(review.author._id)){ %>
+                                <form method="post"
+                                    action="/listings/<%= listing._id %>/reviews/<%= review._id %>?_method=DELETE">
+                                <button type="submit"
+                                    class="inline-flex items-center mt-3 justify-center px-5 py-2 bg-[#111827] text-white font-medium rounded-md shadow-sm hover:bg-gray-800 transition-colors duration-200 text-sm min-w-[84px]">
+                                   Delete
+                                </button>
+                            </form>
+                        <% } %>
+                    </div>
+                </div>
+            <% } %>
+        </div>
+        <div id="map" style="width: 100%; height: 400px; margin-top: 20px;"></div>
+    </div>
+    <hr>
+
+    <script>
+    const MAPTILER_KEY = '941HE2OSbJqvtCh4WRkQ';
+    // Inject the string name safely from MongoDB into frontend JS
+    const targetLocation = "<%= listing.location %>"; 
+
+    // 2. Call MapTiler's Geocoding API to turn the text name into coordinates [lng, lat]
+    const geocodeUrl = `https://api.maptiler.com/geocoding/${encodeURIComponent(targetLocation)}.json?key=${MAPTILER_KEY}`;
+
+    fetch(geocodeUrl)
+      .then(response => response.json())
+      .then(data => {
+        // Verify if MapTiler found a matching location
+        if (!data.features || data.features.length === 0) {
+          console.error("Location not found");
+          return;
+        }
+
+        // MapTiler returns coordinates as [longitude, latitude]
+        const coordinates = data.features[0].center; 
+
+        // 3. Initialize the Map and center it directly on those coordinates
+        const map = new maplibregl.Map({
+          container: 'map',
+          style: `https://api.maptiler.com/maps/streets-v2/style.json?key=${MAPTILER_KEY}`,
+          center: coordinates, // Automatically jumps straight to Chandigarh
+          zoom: 12 // Good zoom level to see city details
+        });
+
+        // 4. Drop a marker pin exactly on that spot
+        new maplibregl.Marker({ color: '#FF3333' })
+          .setLngLat(coordinates)
+          .setPopup(new maplibregl.Popup().setHTML(`<h3>${targetLocation}</h3>`))
+          .addTo(map);
+      })
+      .catch(err => console.error("Geocoding failed:", err));
+  </script>
+</div>

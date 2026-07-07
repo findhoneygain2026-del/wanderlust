@@ -1,0 +1,18 @@
+<% if(success && success.length){ %>
+<div id="alert-1" class="p-4 mb-4 text-sm rounded-lg bg-[#dcfce7] text-[#166534] w-6/12 mx-auto flex justify-between items-center" role="alert">
+  <span class="font-medium"><%= success %></span>
+  
+  <button type="button" onclick="document.getElementById('alert-1').style.display = 'none'" class="ml-auto bg-transparent hover:bg-green-100 p-1 rounded">
+    ✕
+  </button>
+</div>
+<% } %>
+<% if(error && error.length){ %>
+<div id="alert-error" class="p-4 mb-4 text-sm rounded-lg bg-[#fef2f2] text-[#991b1b] w-6/12 mx-auto flex justify-between items-center" role="alert">
+  <span class="font-medium"><%= error %></span>
+  
+  <button type="button" onclick="document.getElementById('alert-error').style.display = 'none'" class="ml-auto bg-transparent hover:bg-red-100 p-1 rounded">
+    ✕
+  </button>
+</div>
+<% } %>

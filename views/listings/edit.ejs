@@ -1,0 +1,105 @@
+<% layout("/layouts/boilerplate") %>
+
+<div class="flex justify-center items-center min-h-[calc(100vh-100px)] px-4 py-8">
+  <div class="w-full max-w-2xl bg-white p-6 shadow-sm ring-1 ring-gray-950/5 rounded-xl sm:p-8">
+    
+    <div class="mb-8 text-center sm:text-left">
+      <h3 class="text-2xl font-bold tracking-tight text-gray-900 sm:text-3xl">Edit Your Listing</h3>
+      <p class="mt-2 text-sm text-gray-500">Update the details of your property below.</p>
+    </div>
+
+    <form method="POST" action="/listings/<%= listing._id%>?_method=PUT" class="space-y-6 needs-validation" novalidate enctype="multipart/form-data">
+
+      <div class="mb-5 max-w-md">
+  <label for="category" class="block mb-2 text-sm font-medium text-gray-700 tracking-wide">
+    Category
+  </label>
+  <div class="relative">
+    <select 
+      name="listing[category]" 
+      id="category" 
+      class="block w-full px-4 py-3 text-gray-900 bg-white border border-gray-300 rounded-lg shadow-sm appearance-none focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:border-indigo-500 transition duration-150 ease-in-out sm:text-sm"
+      required
+    >
+      <option value="rooms" <%= listing.category === 'rooms' ? 'selected' : '' %>>Rooms</option>
+      <option value="iconic-cities" <%= listing.category === 'iconic-cities' ? 'selected' : '' %>>Iconic Cities</option>
+      <option value="mountains" <%= listing.category === 'mountains' ? 'selected' : '' %>>Mountains</option>
+      <option value="castles" <%= listing.category === 'castles' ? 'selected' : '' %>>Castles</option>
+      <option value="amazing-pools" <%= listing.category === 'amazing-pools' ? 'selected' : '' %>>Amazing Pools</option>
+      <option value="camping" <%= listing.category === 'camping' ? 'selected' : '' %>>Camping</option>
+      <option value="farms" <%= listing.category === 'farms' ? 'selected' : '' %>>Farms</option>
+      <option value="arctic" <%= listing.category === 'arctic' ? 'selected' : '' %>>Arctic</option>
+    </select>
+    
+    <!-- Custom Dropdown Arrow Icon -->
+    <div class="pointer-events-none absolute inset-y-0 right-0 flex items-center px-3 text-gray-500">
+      <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
+        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7"></path>
+      </svg>
+    </div>
+  </div>
+</div>
+      
+      <div class="form-group">
+        <label for="title" class="block text-sm font-medium text-gray-700 mb-1.5">Title</label>
+        <input type="text" id="title" value="<%= listing.title %>" name="listing[title]" placeholder="Enter title" required
+               class="form-input block w-full rounded-md border-0 py-2.5 px-3.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-rose-500 sm:text-sm sm:leading-6">
+        <div class="invalid-feedback hidden text-sm text-red-500 mt-1">Please enter a valid title.</div>
+      </div>
+
+      <div class="form-group">
+        <label for="description" class="block text-sm font-medium text-gray-700 mb-1.5">Description</label>
+        <textarea id="description" name="listing[description]" rows="4" placeholder="Describe your place..." required
+                  class="form-input block w-full rounded-md border-0 py-2.5 px-3.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-rose-500 sm:text-sm sm:leading-6"><%= listing.description %></textarea>
+        <div class="invalid-feedback hidden text-sm text-red-500 mt-1">Please provide a description.</div>
+      </div>
+      <div>
+        Original Listing Image
+        <img src="<%= listing.image.url %>" alt="Listing Image" class="w-full h-64 object-cover rounded-md mb-4">
+      </div>
+
+        <div class="form-group">
+                <label class="block text-md font-medium text-gray-700 mb-1">Upload New Image</label>
+                <input type="file" name="listing[image]"
+                       class="form-input w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:border-rose-500 focus:ring-2 focus:ring-rose-200 transition">
+                <div class="invalid-feedback hidden text-sm text-red-500 mt-1">Please enter an image file.</div>
+            </div>
+
+      <div class="form-group">
+        <label for="price" class="block text-sm font-medium text-gray-700 mb-1.5">Price (per night)</label>
+        <div class="relative rounded-md shadow-sm">
+          <div class="pointer-events-none absolute inset-y-0 left-0 flex items-center pl-3">
+            <span class="text-gray-500 sm:text-sm">₹</span>
+          </div>
+          <input type="number" id="price" name="listing[price]" value="<%= listing.price %>" placeholder="0.00" required min="0"
+                 class="form-input block w-full rounded-md border-0 py-2.5 pl-8 pr-3.5 text-gray-900 ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-rose-500 sm:text-sm sm:leading-6">
+        </div>
+        <div class="invalid-feedback hidden text-sm text-red-500 mt-1">Please enter a valid price.</div>
+      </div>
+
+      <div class="grid grid-cols-1 gap-x-6 gap-y-6 sm:grid-cols-2">
+        <div class="form-group">
+          <label for="location" class="block text-sm font-medium text-gray-700 mb-1.5">Location / City</label>
+          <input type="text" id="location" name="listing[location]" value="<%= listing.location %>" placeholder="e.g., Goa" required
+                 class="form-input block w-full rounded-md border-0 py-2.5 px-3.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-rose-500 sm:text-sm sm:leading-6">
+          <div class="invalid-feedback hidden text-sm text-red-500 mt-1">Please specify the location.</div>
+        </div>
+
+        <div class="form-group">
+          <label for="country" class="block text-sm font-medium text-gray-700 mb-1.5">Country</label>
+          <input type="text" id="country" name="listing[country]" value="<%= listing.country %>" placeholder="e.g., India" required
+                 class="form-input block w-full rounded-md border-0 py-2.5 px-3.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-rose-500 sm:text-sm sm:leading-6">
+          <div class="invalid-feedback hidden text-sm text-red-500 mt-1">Please specify the country.</div>
+        </div>
+      </div>
+
+      <div class="pt-2">
+        <button type="submit" 
+                class="flex w-full items-center justify-center rounded-md bg-rose-500 px-3.5 py-2.5 text-center text-sm font-semibold text-white shadow-sm hover:bg-rose-600 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-rose-500 transition-colors duration-200">
+          Save Changes
+        </button>
+      </div>
+
+    </form>
+  </div>
+</div>
