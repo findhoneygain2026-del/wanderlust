@@ -1,6 +1,6 @@
 <% layout('/layouts/boilerplate') %>
 
-<!-- It's highly recommended to move these two lines into the <head> of your boilerplate.ejs -->
+<!-- MapLibre Dependencies -->
 <script src="https://unpkg.com/maplibre-gl@latest/dist/maplibre-gl.js"></script>
 <link href="https://unpkg.com/maplibre-gl@latest/dist/maplibre-gl.css" rel="stylesheet" />
 
@@ -76,8 +76,7 @@
             <hr class="mt-4">
         <% } %>
 
-        <!-- CORRECTED: Placed the grid container OUTSIDE the loop -->
-        <% if(listing.reviews.length > 0) { %>
+        <% if(listing.reviews && listing.reviews.length > 0) { %>
             <p class="mt-6"><b>All Reviews</b></p>
             <div class="grid grid-cols-1 md:grid-cols-2 gap-4 wrap mt-4">
                 <% for(review of listing.reviews) { %>
@@ -104,7 +103,9 @@
     </div>
     
     <!-- Map Container -->
-    <div id="map" class="rounded-xl shadow-sm" style="width: 100%; height: 400px; margin-top: 20px;"></div>
+    <div id="map" class="rounded-xl shadow-sm bg-gray-100 flex items-center justify-center" style="width: 100%; height: 400px; margin-top: 20px;">
+        <!-- Loading or error text will show up here -->
+    </div>
 </div>
 
 <hr>
@@ -112,21 +113,29 @@
 <script>
     const MAPTILER_KEY = 'UZlRbvnaCTgVyaQeYymx';
     
-    // CORRECTED: Safe JSON stringify prevents crashes from quotes in location names
+    // Safely parse the location string to prevent JavaScript crashes
     const targetLocation = <%- JSON.stringify(listing.location) %>; 
+    const mapDiv = document.getElementById('map');
 
     const geocodeUrl = `https://api.maptiler.com/geocoding/${encodeURIComponent(targetLocation)}.json?key=${MAPTILER_KEY}`;
 
     fetch(geocodeUrl)
-      .then(response => response.json())
+      .then(response => {
+        if (!response.ok) {
+          throw new Error(`API Error: ${response.status} ${response.statusText}`);
+        }
+        return response.json();
+      })
       .then(data => {
         if (!data.features || data.features.length === 0) {
-          console.error("Location not found");
-          document.getElementById('map').innerHTML = "<p style='padding:20px; text-align:center;'>Map location not found.</p>";
+          mapDiv.innerHTML = `<p style="padding:20px; color:red; text-align:center;">Location '${targetLocation}' not found.</p>`;
           return;
         }
 
         const coordinates = data.features[0].center; 
+        
+        // Clear out any loading/error text before drawing the map
+        mapDiv.innerHTML = "";
 
         const map = new maplibregl.Map({
           container: 'map',
@@ -141,7 +150,8 @@
           .addTo(map);
       })
       .catch(err => {
-          console.error("Geocoding failed:", err);
-          document.getElementById('map').innerHTML = "<p style='padding:20px; text-align:center;'>Failed to load map.</p>";
+          // Prints exact errors to the mobile screen inside the map box
+          mapDiv.innerHTML = `<p style="padding:20px; color:#ef4444; font-weight:bold; text-align:center;">Map crashed: ${err.message}</p>`;
+          console.error(err);
       });
 </script>
